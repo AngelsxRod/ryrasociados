@@ -21,7 +21,7 @@ pnpm build
 
 La página presenta los servicios de auditoría, contabilidad, asesoría y el sistema ISC. Las fichas amplían su información en la misma página. El formulario de tres campos abre la aplicación de correo del visitante con un mensaje preparado; no envía ni almacena datos en un servidor.
 
-Los datos de contacto están en [app/page.tsx](app/page.tsx) y [components/contact-form.tsx](components/contact-form.tsx). Hay que actualizarlos en ambos archivos si cambian. La propuesta PDF usada como referencia editorial permanece fuera de Git porque contiene información de un cliente y condiciones comerciales.
+Los datos de contacto y la preparación del correo están en [lib/contact.ts](lib/contact.ts). La página y el formulario usan ese módulo; cualquier cambio de teléfono, dirección o destinatario se hace allí. La propuesta PDF usada como referencia editorial permanece fuera de Git porque contiene información de un cliente y condiciones comerciales.
 
 ## Convención de commits
 
