@@ -1,7 +1,10 @@
-import { ArrowDown, ArrowRight, ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
+import Brand from "@/components/brand";
 import ContactForm from "@/components/contact-form";
-import MobileNav from "@/components/mobile-nav";
+import HeroCarousel from "@/components/hero-carousel";
 import ServicesList from "@/components/services-list";
+import SiteHeader from "@/components/site-header";
 import { contact } from "@/lib/contact";
 
 const nav = [
@@ -38,40 +41,22 @@ const services = [
     detail: "Acompañamos el análisis de información financiera, la revisión de riesgos y la mejora de procesos. También orientamos en temas tributarios y regulatorios vinculados con la actividad de la empresa.",
   },
   {
-    title: "Sistema ISC",
+    title: "Sistema",
     lead: "Conectamos información administrativa y contable en un solo entorno.",
     tags: ["Ventas y facturación", "Contabilidad y planillas"],
-    detail: "ISC, Investigación y Sistema de Control, integra módulos de ventas, contabilidad y planillas. Incluye funciones para inventario, bancos y otras áreas operativas, con acompañamiento en configuración y capacitación.",
+    detail: "El sistema integra módulos de ventas, contabilidad y planillas. Incluye funciones para inventario, bancos y otras áreas operativas, con acompañamiento en configuración y capacitación.",
   },
 ];
-
-function Brand({ light = false }: { light?: boolean }) {
-  return (
-    <a href="#inicio" className={"brand" + (light ? " brand-light" : "")} aria-label="R&R Asociados, ir al inicio">
-      <span className="brand-monogram" aria-hidden="true">R<span>&</span>R</span>
-      <span className="brand-name"><strong>R&R Asociados</strong><small>Contadores públicos</small></span>
-    </a>
-  );
-}
 
 export default function Home() {
   return (
     <div id="inicio" className="site-shell">
       <a href="#contenido" className="skip-link">Ir al contenido</a>
-      <header className="site-header">
-        <div className="container header-inner">
-          <Brand />
-          <nav className="desktop-nav" aria-label="Navegación principal">
-            {nav.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-          </nav>
-          <a href="#contacto" className="header-contact">Conversemos <ArrowUpRight size={16} aria-hidden="true" /></a>
-          <div className="mobile-menu"><MobileNav items={nav} /></div>
-        </div>
-      </header>
+      <SiteHeader items={nav} />
 
       <main id="contenido">
         <section className="hero" aria-labelledby="hero-title">
-          <div className="container hero-grid">
+          <div className="container hero-inner">
             <div className="hero-copy">
               <p className="eyebrow">Auditoría y contabilidad en Guatemala</p>
               <h1 id="hero-title">Ayudamos a construir empresas confiables.</h1>
@@ -80,22 +65,9 @@ export default function Home() {
                 <a href="#servicios" className="button button-primary">Conoce nuestros servicios <ArrowUpRight size={17} aria-hidden="true" /></a>
                 <a href="#contacto" className="text-link">Habla con nosotros <ArrowRight size={17} aria-hidden="true" /></a>
               </div>
-              <a className="hero-scroll" href="#nosotros">Conoce la firma <ArrowDown size={16} aria-hidden="true" /></a>
-            </div>
-            <div className="hero-panel" aria-label="Resumen de la firma">
-              <div className="hero-panel-top">
-                <p>En qué podemos ayudarte</p>
-                <span>R&R</span>
-              </div>
-              <ul className="hero-service-list">
-                <li>Auditoría administrativa</li>
-                <li>Contabilidad fiscal</li>
-                <li>Asesoría financiera y tributaria</li>
-                <li>Sistema ISC</li>
-              </ul>
-              <div className="hero-proof"><strong>20<span>+</span></strong><p>años de experiencia con clientes de diversos sectores</p></div>
             </div>
           </div>
+          <HeroCarousel />
         </section>
 
         <section id="nosotros" className="section about-section" aria-labelledby="about-title">
@@ -103,6 +75,10 @@ export default function Home() {
             <div className="section-intro about-intro">
               <div><p className="section-label">La firma</p><h2 id="about-title">Conocemos la operación detrás de cada cifra.</h2></div>
               <p>En R&R Asociados reunimos experiencia profesional y atención cercana para ayudar a las empresas a comprender sus números, fortalecer sus procesos y tomar decisiones con mayor confianza.</p>
+            </div>
+            <div className="about-visual">
+              {/* https://unsplash.com/photos/two-people-reviewing-documents-at-a-table-MhqUBTxQ3Hw */}
+              <Image src="/sections/revision-en-equipo.webp" alt="Dos profesionales revisan documentos sobre una mesa de trabajo" fill sizes="(max-width: 760px) calc(100vw - 40px), 1200px" />
             </div>
             <div className="pillar-grid">
               {pillars.map(({ title, body }) => <article className="pillar" key={title}><h3>{title}</h3><p>{body}</p></article>)}
@@ -122,7 +98,10 @@ export default function Home() {
 
         <section id="experiencia" className="section experience-section" aria-labelledby="experience-title">
           <div className="container experience-grid">
-            <div><p className="section-label">Experiencia</p><h2 id="experience-title">Trayectoria aplicada a tu negocio.</h2><p className="experience-lead">Hemos acompañado a clientes de distintos sectores, comprendiendo sus operaciones y la importancia de contar con información confiable.</p></div>
+            <div><p className="section-label">Experiencia</p><h2 id="experience-title">Trayectoria aplicada a tu negocio.</h2><p className="experience-lead">Hemos acompañado a clientes de distintos sectores, comprendiendo sus operaciones y la importancia de contar con información confiable.</p><div className="experience-visual">
+              {/* https://unsplash.com/photos/desk-with-calculator-charts-and-pencil-dspKrJYp644 */}
+              <Image src="/sections/analisis-de-datos.webp" alt="Gráficas financieras, calculadora y lápiz sobre una mesa" fill sizes="(max-width: 760px) calc(100vw - 40px), 600px" />
+            </div></div>
             <div className="experience-evidence"><div className="experience-number"><strong>20<span>+</span></strong><p>años de trabajo con empresas</p></div><p className="sector-label">Sectores en los que hemos trabajado</p><ul><li>Sector eléctrico</li><li>Combustibles</li><li>Industria</li><li>Servicios</li></ul></div>
           </div>
         </section>
