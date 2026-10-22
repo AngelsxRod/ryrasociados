@@ -1,0 +1,62 @@
+name: Publicar sitio por FTPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ryrasociados-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Compilar y publicar
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@v6
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Configurar pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Verificar código
+        run: |
+          pnpm lint
+          pnpm exec tsc --noEmit
+
+      - name: Generar sitio estático
+        run: |
+          pnpm build
+          test -f out/index.html
+          test -f out/404.html
+          test -f out/.htaccess
+
+      - name: Publicar en cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: premium225.web-hosting.com
+          username: deploy@ryrasociados.com.gt
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          security: strict
+          local-dir: ./out/
+          server-dir: ./
+          state-name: .ftp-deploy-sync-state.json
+          dangerous-clean-slate: false

@@ -276,13 +276,11 @@ html { scroll-behavior: smooth; }
 .service-tags li + li::before { content: "/"; margin-right: 16px; color: #a2aca2; }
 
 .experience-section { background: var(--brand-ink); color: white; }
-.experience-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr); gap: 10vw; }
+.experience-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, .78fr); align-items: center; column-gap: clamp(64px, 9vw, 160px); row-gap: 56px; }
 .experience-section .section-label { color: #c7d39a; }
 .experience-section h2 { max-width: 600px; }
 .experience-lead { max-width: 550px; margin-top: 24px; color: #c6d2d3; font-size: 16px; line-height: 1.85; }
-.experience-visual { position: relative; width: 100%; aspect-ratio: 1.75 / 1; margin-top: 36px; overflow: hidden; background: #31484d; }
-.experience-visual img { object-fit: cover; }
-.experience-evidence { border-top: 2px solid #a8b878; padding-top: 21px; }
+.experience-evidence { border-top: 2px solid #a8b878; border-bottom: 1px solid #ffffff40; padding-block: 21px 31px; }
 .experience-number { display: flex; align-items: end; gap: 25px; padding-bottom: 30px; border-bottom: 1px solid #ffffff40; }
 .experience-number strong { color: #e0e9ad; font-family: var(--font-editorial), Georgia, serif; font-size: clamp(74px, 8vw, 120px); font-weight: 400; letter-spacing: -.09em; line-height: .95; }
 .experience-number strong span { font-size: .58em; }
@@ -293,7 +291,7 @@ html { scroll-behavior: smooth; }
 
 .contact-section { background: white; }
 .contact-intro { margin-bottom: 56px; }
-.contact-grid { display: grid; grid-template-columns: minmax(280px, .75fr) minmax(0, 1fr); gap: clamp(42px, 7vw, 110px); border-top: 1px solid var(--brand-line); padding-top: 43px; }
+.contact-grid { display: grid; grid-template-columns: minmax(280px, 600px); gap: clamp(42px, 7vw, 110px); border-top: 1px solid var(--brand-line); padding-top: 43px; }
 .contact-grid h3 { font-size: 30px; letter-spacing: -.04em; line-height: 1.2; }
 .contact-details > p, .contact-form-panel > p { max-width: 370px; margin-top: 16px; color: var(--brand-text); font-size: 14px; line-height: 1.8; }
 .contact-details address { display: grid; gap: 26px; margin-top: 44px; font-style: normal; }
@@ -302,6 +300,27 @@ html { scroll-behavior: smooth; }
 .contact-details address small { display: block; margin-bottom: 3px; color: var(--brand-text); font-size: 12px; font-weight: 700; }
 .contact-details address a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .contact-form-panel > p { margin-bottom: 30px; }
+.contact-form [data-slot="field"][data-invalid="true"] { color: var(--brand-ink); }
+.contact-form [aria-invalid="true"] { border-color: var(--brand-olive); box-shadow: 0 0 0 2px #69732224; }
+.contact-form [data-slot="field-error"] { color: #56601f; font-size: 12px; line-height: 20px; }
+
+.not-found-page { display: flex; min-height: 100svh; flex-direction: column; background: var(--brand-paper); color: var(--brand-ink); }
+.not-found-header { display: flex; min-height: 104px; align-items: center; justify-content: space-between; gap: 24px; }
+.not-found-header-link { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; text-decoration: none; }
+.not-found-header-link:hover, .not-found-secondary:hover { text-decoration: underline; text-underline-offset: 5px; }
+.not-found-page a:focus-visible { outline: 2px solid var(--brand-olive); outline-offset: 5px; }
+.not-found-main { display: grid; flex: 1; grid-template-columns: minmax(0, .95fr) minmax(0, 1fr); align-items: center; gap: clamp(48px, 8vw, 128px); border-top: 1px solid var(--brand-line); padding-block: clamp(72px, 11vh, 140px); }
+.not-found-number { align-self: stretch; display: flex; align-items: center; border-bottom: 2px solid var(--brand-olive); color: #304950; font-family: var(--font-editorial), Georgia, serif; font-size: clamp(160px, 19vw, 310px); font-weight: 400; letter-spacing: -.12em; line-height: .82; white-space: nowrap; }
+.not-found-content { max-width: 570px; padding-block: 20px; }
+.not-found-label { color: var(--brand-olive); font-size: 13px; font-weight: 700; }
+.not-found-content h1 { margin-top: 20px; font-family: var(--font-editorial), Georgia, serif; font-size: clamp(44px, 4.7vw, 72px); font-weight: 400; letter-spacing: -.055em; line-height: 1.15; }
+.not-found-description { max-width: 440px; margin-top: 26px; color: var(--brand-text); font-size: 16px; line-height: 1.8; }
+.not-found-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; margin-top: 38px; }
+.not-found-primary { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 15px; background: var(--brand-ink); padding: 13px 20px; color: white; font-size: 14px; font-weight: 700; text-decoration: none; }
+.not-found-primary:hover { background: #304950; }
+.not-found-secondary { font-size: 14px; font-weight: 700; text-decoration: none; }
+.not-found-footer { background: #12262e; color: #e0e9e8; font-size: 12px; }
+.not-found-footer .container { display: flex; min-height: 80px; align-items: center; justify-content: space-between; gap: 16px; }
 
 .site-footer { background: #12262e; color: white; padding-top: 60px; }
 .brand-light { color: white; }
@@ -320,6 +339,11 @@ html { scroll-behavior: smooth; }
 }
 
 @media (max-width: 760px) {
+  .not-found-header { min-height: 84px; }
+  .not-found-main { grid-template-columns: 1fr; align-content: center; gap: 54px; padding-block: 70px 90px; }
+  .not-found-number { min-height: 185px; align-self: auto; font-size: clamp(135px, 31vw, 230px); }
+  .not-found-content { padding-block: 0; }
+  .not-found-content h1 { max-width: 570px; }
   .container { width: min(100% - 40px, 600px); }
   .header-inner { min-height: 76px; }
   .section { scroll-margin-top: 76px; }
@@ -347,6 +371,12 @@ html { scroll-behavior: smooth; }
 }
 
 @media (max-width: 480px) {
+  .not-found-header-link { font-size: 12px; }
+  .not-found-main { gap: 42px; padding-block: 58px 78px; }
+  .not-found-number { min-height: 155px; }
+  .not-found-content h1 { font-size: clamp(40px, 10vw, 52px); }
+  .not-found-description { font-size: 15px; }
+  .not-found-footer .container { align-items: flex-start; flex-direction: column; justify-content: center; padding-block: 20px; }
   .container { width: min(100% - 36px, 600px); }
   .brand { gap: 9px; }
   .brand-monogram { min-width: 63px; padding-right: 9px; font-size: 25px; }

@@ -9,20 +9,3 @@ export const contact = {
     city: "Guatemala, Guatemala",
   },
 } as const;
-
-type ContactMessage = {
-  name: string;
-  email: string;
-  message: string;
-};
-
-export function buildContactMailto(fields: ContactMessage): string | null {
-  const name = fields.name.trim();
-  const email = fields.email.trim();
-  const message = fields.message.trim();
-  if (!name || !email || !message) return null;
-
-  const subject = encodeURIComponent("Mensaje desde el sitio web de R&R Asociados: " + name);
-  const body = encodeURIComponent("Nombre: " + name + "\nCorreo: " + email + "\n\nMensaje:\n" + message);
-  return "mailto:" + contact.email + "?subject=" + subject + "&body=" + body;
-}

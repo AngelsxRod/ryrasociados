@@ -30,9 +30,19 @@ El índice queda en `.codegraph/` y se reconstruye en cada equipo; Git solo guar
 
 ## Contenido y contacto
 
-La página presenta los servicios de auditoría, contabilidad, asesoría y el sistema ISC. Las fichas amplían su información en la misma página. El formulario de tres campos abre la aplicación de correo del visitante con un mensaje preparado; no envía ni almacena datos en un servidor.
+La página presenta los servicios de auditoría, contabilidad, asesoría y el sistema ISC. Las fichas amplían su información en la misma página. Por ahora, la versión publicada muestra teléfono y dirección, sin formulario ni correo. El componente del formulario queda en el proyecto para una publicación posterior. Tiene Turnstile preparado, pero todavía no envía ni almacena datos.
 
-Los datos de contacto y la preparación del correo están en [lib/contact.ts](lib/contact.ts). La página y el formulario usan ese módulo; cualquier cambio de teléfono, dirección o destinatario se hace allí. La propuesta PDF usada como referencia editorial permanece fuera de Git porque contiene información de un cliente y condiciones comerciales.
+Los datos de contacto están en [lib/contact.ts](lib/contact.ts). La propuesta PDF usada como referencia editorial permanece fuera de Git porque contiene información de un cliente y condiciones comerciales.
+
+### Turnstile del formulario pendiente de publicación
+
+El widget «Contacto R&R Asociados» de Cloudflare permite `ryrasociados.com.gt`, usa el modo gestionado y no tiene preautorización. Para probar el componente localmente, define `NEXT_PUBLIC_TURNSTILE_SITE_KEY` en `.env.local`; usa la clave de prueba `1x00000000000000000000AA` en `localhost` o la clave pública del widget para una vista en el dominio autorizado. Next.js incorpora esta variable al JavaScript durante `pnpm build`, así que hay que configurarla antes de compilar la versión que publique el formulario. La clave secreta permanece en Cloudflare y nunca debe ponerse en `NEXT_PUBLIC_` ni en el repositorio.
+
+El formulario sigue sin montarse en `app/page.tsx` y no tiene acción de envío. Antes de habilitarlo se debe implementar un endpoint que valide cada token con Siteverify y luego procese el mensaje; completar el widget en el navegador por sí solo no protege el formulario.
+
+## Publicación en cPanel
+
+GitHub Actions compila la exportación estática y la sincroniza por FTPS con cPanel al subir cambios a `main`. También permite ejecutar el despliegue manualmente desde Actions. La configuración inicial, las verificaciones y la forma de revertir una publicación están en [docs/publicacion.md](docs/publicacion.md).
 
 ## Convención de commits
 

@@ -13,7 +13,7 @@ export default function ServicesList({ services }: { services: Service[] }) {
   return (
     <Accordion multiple className="service-list">
       {services.map(({ title, lead, tags, detail }) => (
-        <AccordionItem key={title} value={title} role="article" className="service border-b-0">
+        <AccordionItem key={title} value={title} role="article" className="service border-b-0" data-reveal>
           <div className="service-heading"><h3>{title}</h3><p>{lead}</p></div>
           <div className="service-info">
             <ul className="service-tags">{tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>

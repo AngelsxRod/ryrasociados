@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowRight, ArrowUpRight, Pause, Play } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   Carousel,
@@ -14,18 +15,27 @@ const slides = [
     src: "/hero/contabilidad.webp",
     alt: "Documentos contables, recibos y calculadora sobre un escritorio",
     label: "Información contable clara",
+    eyebrow: "Auditoría y contabilidad en Guatemala",
+    headline: "Ayudamos a construir empresas confiables.",
+    description: "Información contable clara, procesos bien revisados y asesoría cercana para decidir con confianza.",
     // https://unsplash.com/photos/desk-with-papers-glasses-calculator-and-office-supplies-sW02MHv37yk
   },
   {
     src: "/hero/analisis-financiero.webp",
     alt: "Gráficas financieras, calculadora y archivadores en una mesa de trabajo",
     label: "Análisis para decidir mejor",
+    eyebrow: "Análisis financiero",
+    headline: "Decisiones más claras desde tus números.",
+    description: "Analizamos resultados y tendencias para que tu empresa avance con criterio y confianza.",
     // https://unsplash.com/photos/desk-with-calculator-charts-and-binders-FVwy7PBiSUo
   },
   {
     src: "/hero/informes-financieros.webp",
     alt: "Informes con gráficas, calculadora y equipo de trabajo sobre un escritorio",
     label: "Revisión de informes financieros",
+    eyebrow: "Auditoría e informes",
+    headline: "Informes confiables que fortalecen tu empresa.",
+    description: "Revisamos datos y procesos con rigor para fortalecer el control y respaldar cada paso de tu negocio.",
     // https://unsplash.com/photos/office-desk-with-smartphone-and-financial-charts-heiYgqp0Tsk
   },
 ];
@@ -33,27 +43,22 @@ const slides = [
 export default function HeroCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [stoppedByInteraction, setStoppedByInteraction] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const activeSlide = slides[current] ?? slides[0];
 
   useEffect(() => {
     if (!api) return;
 
     const syncCurrent = () => setCurrent(api.selectedScrollSnap());
-    const stopOnDrag = () => setStoppedByInteraction(true);
-
     syncCurrent();
     api.on("select", syncCurrent);
     api.on("reInit", syncCurrent);
-    api.on("pointerDown", stopOnDrag);
 
     return () => {
       api.off("select", syncCurrent);
       api.off("reInit", syncCurrent);
-      api.off("pointerDown", stopOnDrag);
     };
   }, [api]);
 
@@ -74,29 +79,40 @@ export default function HeroCarousel() {
   }, []);
 
   useEffect(() => {
-    if (!api || isHovered || isFocused || !isVisible || prefersReducedMotion || stoppedByInteraction) return;
+    if (!api || !isVisible || prefersReducedMotion || isPaused) return;
 
-    const timer = window.setInterval(() => api.scrollNext(), 5000);
+    const timer = window.setInterval(() => api.scrollNext(), 7000);
     return () => window.clearInterval(timer);
-  }, [api, isHovered, isFocused, isVisible, prefersReducedMotion, stoppedByInteraction]);
+  }, [api, isVisible, prefersReducedMotion, isPaused]);
 
-  return (
+  return <div
+    className="hero-stage"
+    style={{ position: "relative", isolation: "isolate" }}
+  >
+    <div className="container hero-inner">
+      <div className="hero-copy">
+        <div aria-live={isPaused ? "polite" : "off"}>
+          <div className="hero-message" key={current}>
+            <p className="eyebrow">{activeSlide.eyebrow}</p>
+            <h1 id="hero-title">{activeSlide.headline}</h1>
+            <p className="hero-lead">{activeSlide.description}</p>
+          </div>
+        </div>
+        <div className="hero-actions">
+          <a href="#servicios" className="button button-primary">Conoce nuestros servicios <ArrowUpRight size={17} aria-hidden="true" /></a>
+          <a href="#contacto" className="text-link">Habla con nosotros <ArrowRight size={17} aria-hidden="true" /></a>
+        </div>
+      </div>
+    </div>
     <Carousel
       className="hero-carousel"
       opts={{ loop: true }}
       setApi={setApi}
       aria-label="Imágenes de contabilidad y auditoría"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClickCapture={() => setStoppedByInteraction(true)}
-      onFocusCapture={() => setIsFocused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
-      }}
     >
       <CarouselContent className="hero-carousel-track">
         {slides.map((slide, index) => (
-          <CarouselItem className="hero-carousel-slide" key={slide.src}>
+          <CarouselItem className="hero-carousel-slide" key={slide.src} aria-hidden={index !== current} aria-roledescription="diapositiva" aria-label={`${index + 1} de ${slides.length}: ${slide.label}`}>
             <div className="hero-carousel-image">
               <Image
                 src={slide.src}
@@ -110,7 +126,7 @@ export default function HeroCarousel() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="hero-carousel-meta">
+      <div className="hero-carousel-meta" style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <div className="hero-carousel-indicators" aria-label="Elegir imagen">
           {slides.map((slide, index) => (
             <button
@@ -122,7 +138,16 @@ export default function HeroCarousel() {
             />
           ))}
         </div>
+        <button
+          type="button"
+          aria-label={isPaused ? "Reanudar carrusel" : "Pausar carrusel"}
+          aria-pressed={isPaused}
+          onClick={() => setIsPaused((paused) => !paused)}
+          style={{ display: "grid", placeItems: "center", width: 44, height: 44, border: "1px solid rgba(255,255,255,.45)", borderRadius: "50%", background: "rgba(16,43,50,.5)", color: "white", cursor: "pointer" }}
+        >
+          {isPaused ? <Play size={16} fill="currentColor" aria-hidden="true" /> : <Pause size={16} fill="currentColor" aria-hidden="true" />}
+        </button>
       </div>
     </Carousel>
-  );
+  </div>;
 }
