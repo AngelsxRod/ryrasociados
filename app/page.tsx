@@ -159,7 +159,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer"><div className="container"><div className="footer-main"><div><Brand light /><p>Información clara, procesos sólidos y relaciones construidas sobre la confianza.</p></div><nav aria-label="Navegación del pie de página">{nav.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}</nav><div className="footer-contact"><a href={contact.phone.href}>{contact.phone.label}</a></div></div><div className="footer-bottom"><span>© R&R Asociados, S.A.</span><span>Guatemala, C. A.</span></div></div></footer>
+      <footer className="site-footer"><div className="container"><div className="footer-main"><div><Brand light /><p>Información clara, procesos sólidos y relaciones construidas sobre la confianza.</p></div><nav aria-label="Navegación del pie de página">{nav.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}</nav><div className="footer-contact"><a href={contact.phone.href}>{contact.phone.label}</a></div></div><div className="footer-bottom"><span>© R&R Asociados, S.A.</span><span className="publish-check">Prueba de publicación · 21/10/2026</span><span>Guatemala, C. A.</span></div></div></footer>
     </div>
   );
 }
