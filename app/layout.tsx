@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import localFont from "next/font/local";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteDescription, siteUrl } from "@/lib/site";
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es" className={`h-full antialiased ${sans.variable} ${serif.variable}`}>
       <body className="min-h-full flex flex-col">
